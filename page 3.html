@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Favorite Person</title>
+    <style>
+        /* 1. BACKGROUND & LAYOUT */
+        body {
+            background-color: #fdf0f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: 'Courier New', Courier, monospace;
+            overflow: hidden; /* Keeps hearts from creating scroll bars */
+            text-align: center;
+        }
+
+        /* 2. FLOATING HEARTS ANIMATION */
+        .heart {
+            position: absolute;
+            color: rgba(255, 77, 109, 0.4);
+            font-size: 20px;
+            user-select: none;
+            pointer-events: none;
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* 3. THE GIF & CONTAINER */
+        .container {
+            z-index: 10; /* Keeps content above floating hearts */
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            width: 85%;
+            max-width: 350px;
+        }
+
+       bubu.gif {
+            width: 100%;
+            max-width: 200px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        /* 4. TYPEWRITER TEXT */
+        #typewriter {
+            font-size: 1.1rem;
+            color: #ff4d6d;
+            font-weight: bold;
+            min-height: 60px;
+            line-height: 1.5;
+        }
+
+        #typewriter::after {
+            content: "|";
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* 5. BUTTONS */
+        .btn-group {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            font-family: 'Courier New', Courier, monospace;
+            transition: 0.2s;
+        }
+
+        #yesBtn { background-color: #06d6a0; color: white; }
+        #noBtn { background-color: #ef476f; color: white; }
+    </style>
+</head>
+<body>
+
+    <div id="heart-container"></div>
+
+    <div class="container">
+      
+
+        <div id="typewriter"></div>
+
+        <div id="question-area" style="display: none;">
+            <p style="margin-top: 20px; font-size: 0.9rem;">Do you want to see them?</p>
+            <div class="btn-group">
+                <button id="yesBtn" class="btn" onclick="celebrate()">Yes!</button>
+                <button id="noBtn" class="btn" onmouseover="moveNo()" onclick="moveNo()">No</button>
+            </div>
+        </div>
+        
+        <h2 id="victory" style="display: none; color: #06d6a0; margin-top: 20px;">
+            YAY! I KNEW IT! ❤️
+        </h2>
+    </div>
+    <div style="text-align: center; margin-top: 100px; font-family: 'Palatino', serif;">
+        <h2 style="color: #d63384;">Wait till it completes typing YOU!! impatient idiot 😤</h2>
+    <h2 style="color: #d63384;">I have something for you...</h2>
+    
+    <a href="page 4.html" style="text-decoration: none;">
+        <button style="
+            background-color: #ff85a1; 
+            color: white; 
+            padding: 15px 35px; 
+            border: none; 
+            border-radius: 50px; 
+            font-size: 20px; 
+            cursor: pointer; 
+            box-shadow: 0 5px 15px rgba(255, 133, 161, 0.4);
+            transition: 0.3s;">
+            Open Surprise ✨
+        </button>
+    </a>
+</div>
+
+
+    <script>
+        // --- 1. Floating Hearts Logic ---
+        function createHeart() {
+            const container = document.getElementById('heart-container');
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            container.appendChild(heart);
+            setTimeout(() => heart.remove(), 6000);
+        }
+        setInterval(createHeart, 400);
+
+        // --- 2. Typewriter Logic ---
+        const message = "Deepu maaaaa ❣️...It's be 18 months and one day since we have been together and trust me it was very magical and happiest days of my life. I love you soooooo much bangaraa 💋❣️🥰😘....So i want to say i love you in 365 languages representing 365 days of a year......❤️";
+        let index = 0;
+
+        function typeEffect() {
+            if (index < message.length) {
+                document.getElementById("typewriter").innerHTML += message.charAt(index);
+                index++;
+                setTimeout(typeEffect, 70);
+            } else {
+                // Show the buttons after typing is done
+                setTimeout(() => {
+                    document.getElementById('question-area').style.display = 'block';
+                }, 500);
+            }
+        }
+        window.onload = () => setTimeout(typeEffect, 1000);
+
+        // --- 3. Runaway Button Logic ---
+        function moveNo() {
+            const btn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 100);
+            btn.style.position = 'fixed';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+        }
+
+        function celebrate() {
+            document.getElementById('question-area').style.display = 'none';
+            document.getElementById('victory').style.display = 'block';
+            // Simple vibration for mobile
+            if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+        }
+        
+    </script>
+</body>
+</html>

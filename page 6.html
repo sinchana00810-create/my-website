@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Thousand Ways to Say It</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #fff0f3;
+            font-family: 'Georgia', serif;
+            color: #ff4d6d;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        /* Video Styling */
+        .video-container {
+            margin-bottom: 20px;
+        }
+
+        #myVideo {
+            width: 90%;
+            max-width: 400px;
+            border-radius: 25px;
+            border: 6px solid white;
+            box-shadow: 0 10px 30px rgba(255, 77, 109, 0.3);
+        }
+
+        /* Sound Button Styling */
+        .audio-btn {
+            background: white;
+            border: 2px solid #ff85a1;
+            color: #ff85a1;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .audio-btn:hover {
+            background: #ff85a1;
+            color: white;
+        }
+
+        /* Heart Animation */
+        .heart {
+            font-size: 40px;
+            margin: 20px 0;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* Fast Changing Text */
+        #love-container {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #love-text {
+            font-size: 2.4rem;
+            font-weight: bold;
+            transition: opacity 0.3s ease-in-out;
+            opacity: 0;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+        }
+
+        /* Next Page Button */
+        .next-btn {
+            margin-top: 40px;
+            padding: 15px 40px;
+            background: #ff85a1;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(255, 133, 161, 0.4);
+            transition: 0.3s;
+        }
+
+        .next-btn:hover {
+            background: #ff4d6d;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+        
+<video src="file:///storage/emulated/0/Android/data/com.teejay.trebedit/files/TrebEdit user files/surprise /Html/video.mp4" height="400px" width="650px" controls></video>
+
+
+        
+
+    <div class="heart">💖</div>
+      <p style="color: #a3808a; font-style: italic;">(scroll down baby maa🫶)</p>
+
+    <div id="love-container">
+        <h1 id="love-text">I love you</h1>
+    </div>
+
+    <a href="page 7.html" class="next-btn">One more thing... 💌</a>
+
+    <script>
+        // Sound Toggle Logic
+        const video = document.getElementById("myVideo");
+        const muteBtn = document.getElementById("muteBtn");
+
+        function toggleMute() {
+            if (video.muted) {
+                video.muted = false;
+                muteBtn.innerText = "Mute Sound 🔇";
+            } else {
+                video.muted = true;
+                muteBtn.innerText = "Unmute Sound 🔊";
+            }
+        }
+
+      
+    </script>
+
+</body>
+</html>

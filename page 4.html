@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive Heart Background</title>
+    <style>
+        body { margin: 0; overflow: hidden; background-color: #0b0b0b; }
+        canvas { display: block; cursor: crosshair; }
+    </style>
+</head>
+<body>
+  
+        
+      <center><img src="file:///storage/emulated/0/Android/data/com.teejay.trebedit/files/TrebEdit user files/surprise /dudu.gif/bubu.gif" alt=""></center>
+            <div style="text-align: center; margin-top: 100px; font-family: 'Palatino', serif;">
+        <h2 style="color: #d63384;">WaitYOU!! impatient idiot 😤</h2>
+    <h2 style="color: #d63384;">I have something for you...</h2>
+    
+    <a href="page 5.html" style="text-decoration: none;">
+        <button style="
+            background-color: #ff85a1; 
+            color: white; 
+            padding: 15px 35px; 
+            border: none; 
+            border-radius: 50px; 
+            font-size: 20px; 
+            cursor: pointer; 
+            box-shadow: 0 5px 15px rgba(255, 133, 161, 0.4);
+            transition: 0.3s;">
+            Open Surprise ✨
+        </button>
+    </a>
+    
+<canvas id="heartCanvas"></canvas>
+
+<script>
+    const canvas = document.getElementById('heartCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let hearts = [];
+    let particles = [];
+    const mouse = { x: null, y: null, radius: 120 };
+
+    window.addEventListener('mousemove', (e) => { mouse.x = e.x; mouse.y = e.y; });
+    
+    // Click to Burst Logic
+    window.addEventListener('mousedown', (e) => {
+        hearts.forEach((heart, index) => {
+            const dx = heart.x - e.x;
+            const dy = heart.y - e.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance < 100) {
+                createParticles(heart.x, heart.y, heart.color);
+                hearts.splice(index, 1);
+                setTimeout(() => hearts.push(new Heart()), 1000); // Respawn later
+            }
+        });
+    });
+
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    class Particle {
+        constructor(x, y, color) {
+            this.x = x;
+            this.y = y;
+            this.color = color;
+            this.size = Math.random() * 3 + 1;
+            this.speedX = Math.random() * 6 - 3;
+            this.speedY = Math.random() * 6 - 3;
+            this.opacity = 1;
+        }
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            this.opacity -= 0.02;
+        }
+        draw() {
+            ctx.globalAlpha = this.opacity;
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    class Heart {
+        constructor() { this.reset(); }
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = canvas.height + 50;
+            this.size = Math.random() * 10 + 8;
+            this.speed = Math.random() * 1.5 + 0.5;
+            this.opacity = Math.random() * 0.7 + 0.3;
+            this.color = `hsl(${Math.random() * 30 + 330}, 80%, 60%)`;
+        }
+        draw() {
+            ctx.save();
+            ctx.globalAlpha = this.opacity;
+            ctx.fillStyle = this.color;
+            ctx.translate(this.x, this.y);
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.bezierCurveTo(-this.size, -this.size, -this.size, -this.size * 1.5, 0, -this.size * 1.5);
+            ctx.bezierCurveTo(this.size, -this.size * 1.5, this.size, -this.size, 0, 0);
+            ctx.fill();
+            ctx.restore();
+        }
+        update() {
+            this.y -= this.speed;
+            if (mouse.x !== null) {
+                let dx = this.x - mouse.x;
+                let dy = this.y - mouse.y;
+                let distance = Math.sqrt(dx * dx + dy * dy);
+                if (distance < mouse.radius) {
+                    this.x += (dx / distance) * 4;
+                }
+            }
+            if (this.y < -50) this.reset();
+        }
+    }
+
+    function createParticles(x, y, color) {
+        for (let i = 0; i < 15; i++) {
+            particles.push(new Particle(x, y, color));
+        }
+    }
+
+    function init() {
+        for (let i = 0; i < 60; i++) hearts.push(new Heart());
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        hearts.forEach(h => { h.update(); h.draw(); });
+        
+        particles.forEach((p, i) => {
+            p.update();
+            p.draw();
+            if (p.opacity <= 0) particles.splice(i, 1);
+        });
+        
+        requestAnimationFrame(animate);
+    }
+
+    init();
+    animate();
+  
+</script>
+</body>
+</html>
